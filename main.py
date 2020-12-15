@@ -32,15 +32,15 @@ async def get_nombre(nombre: str):
     proyecto_out = ProyectoOut(**proyecto_in_db.dict())
     return proyecto_out
 
-@api.post("/proyecto/consulta/")
-async def get_datos(proyecto_in: ProyectoIn):
+@api.get("/proyecto/consulta/{nombre}/{empresa}")
+async def get_datos(nombre:str,empresa:str):
 
-    proyecto_in_db = get_proyecto(proyecto_in.nombre)
+    proyecto_in_db = get_proyecto(nombre)
  
     if proyecto_in_db == None:
         raise HTTPException(status_code=404,
                 detail="El proyecto no existe")
-    if proyecto_in_db.empresa != proyecto_in.empresa: 
+    if proyecto_in_db.empresa != empresa: 
         raise HTTPException(status_code=403, 
                 detail="El proyecto no fue encontrado")
     
