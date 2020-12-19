@@ -4,7 +4,7 @@ from fastapi import HTTPException
 api = FastAPI()
 
 from db.proyecto_db import ProyectoInDB
-from db.proyecto_db import update_proyecto, get_proyecto , get_all , create_proyecto
+from db.proyecto_db import update_proyecto, get_proyecto , get_all , create_proyecto, delete_proyecto
 import db.proyecto_db
  
 from models.proyecto_models import ProyectoIn, ProyectoOut
@@ -58,3 +58,11 @@ async def crear_proyecto(proyecto_in: ProyectoInDB):
         return {"Se ha creado el proyecto satisfactoriamente"}
     else:
         raise HTTPException(status_code=400,detail="El proyecto ya existe")
+
+@api.delete("/proyecto/eliminar/{nombre}/{empresa}")
+async def eliminar_proyecto(nombre:str,empresa:str):
+    bandera = proyecto_db.delete_proyecto(nombre)
+    if bandera:
+        return {"Se ha eliminado el proyecto satisfactoriamente"}
+    else:
+        raise HTTPException(status_code=400,detail="El proyecto no existe")
