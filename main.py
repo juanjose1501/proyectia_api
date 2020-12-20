@@ -58,3 +58,11 @@ async def crear_proyecto(proyecto_in: ProyectoInDB):
         return {"Se ha creado el proyecto satisfactoriamente"}
     else:
         raise HTTPException(status_code=400,detail="El proyecto ya existe")
+
+@api.delete("/proyecto/eliminar/{nombre}/{empresa}")
+async def eliminar_proyecto(nombre:str,empresa:str):
+    bandera = proyecto_db.delete_proyecto(nombre)
+    if bandera:
+        return {"Se ha eliminado el proyecto satisfactoriamente"}
+    else:
+        raise HTTPException(status_code=400,detail="El proyecto no existe")

@@ -71,5 +71,13 @@ def create_proyecto(proyecto:ProyectoInDB):
     else:
         database_proyecto[proyecto.nombre] = proyecto
 
+def delete_proyecto(proyecto: str):
+    if proyecto in database_proyecto:
+        del database_proyecto[proyecto]
+        return True 
+    else:
+        return False         
+
+
 
 
